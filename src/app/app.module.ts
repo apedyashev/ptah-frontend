@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-// import { AuthModule } from './auth/auth.module';
 import { AppComponent } from './app.component';
+import { UiButtonModule } from './ui/button/ui-button.module';
 
 @NgModule({
   // The components, directives, and pipes that belong to this NgModule.
@@ -16,7 +16,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    // AuthModule
+    UiButtonModule,
   ],
   // Creators of services that this NgModule contributes to the global collection of services; 
   // they become accessible in all parts of the app. (You can also specify providers at the component level.)

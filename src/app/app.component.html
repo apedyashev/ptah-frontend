@@ -1,19 +1,4 @@
-
-<div class="px-8">
-    <span class="font-semibold">{{ title }} app is running!</span>
-    <div class=" py-1">
-        <app-ui-button color="primary">Login</app-ui-button>
-        <app-ui-button color="accent">Login</app-ui-button>
-    </div>
-    <div class="py-1">
-        <app-ui-button-raised color="primary">Register</app-ui-button-raised>
-        <app-ui-button-raised color="accent">Register</app-ui-button-raised>
-    </div>
-    
-    <div  class="py-1">
-        <app-ui-input label="E-Mail" error="" [fullWidth]="true" name="email"></app-ui-input>
-        <app-ui-input label="Password" error="Required" type="password" name="password"> </app-ui-input>
-    </div>
+<div  class="container mx-auto">
+    <router-outlet></router-outlet>
 </div>
 
-<router-outlet></router-outlet>

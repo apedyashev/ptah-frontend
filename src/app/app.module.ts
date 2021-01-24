@@ -3,8 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UiButtonModule } from './ui/button/ui-button.module';
+import { ButtonModule } from './ui/button/ui-button.module';
 import { InputModule } from './ui/input/input.module';
+import { CardModule } from './ui/card/card.module';
 
 @NgModule({
   // The components, directives, and pipes that belong to this NgModule.
@@ -17,8 +18,9 @@ import { InputModule } from './ui/input/input.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    UiButtonModule,
-    InputModule
+    ButtonModule,
+    InputModule,
+    CardModule
   ],
   // Creators of services that this NgModule contributes to the global collection of services; 
   // they become accessible in all parts of the app. (You can also specify providers at the component level.)

@@ -10,4 +10,4 @@ import { UiButtonRaisedComponent } from './ui-button-raised/ui-button-raised.com
   ],
   exports: [UiButtonComponent, UiButtonRaisedComponent]
 })
-export class UiButtonModule { }
+export class ButtonModule { }

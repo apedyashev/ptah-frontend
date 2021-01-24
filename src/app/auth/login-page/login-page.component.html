@@ -1,1 +1,10 @@
-<p>login-page works!</p>
+<div class="container mx-auto lg:w-3/12 md:w-full">
+    <app-ui-card [padding]="8">
+        <ng-container body>
+            <app-ui-input label="E-Mail" error="" [fullWidth]="true" name="email"></app-ui-input>
+            <app-ui-input label="Password" type="password" name="password" [fullWidth]="true"> </app-ui-input>
+            <app-ui-button color="primary">Reg</app-ui-button>
+        </ng-container>
+    </app-ui-card>
+</div>
+

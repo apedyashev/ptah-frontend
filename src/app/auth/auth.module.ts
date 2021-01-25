@@ -7,9 +7,10 @@ import { UiButtonModule } from '../ui/button/button.module';
 import { UiInputModule } from '../ui/input/input.module';
 import { UiCardModule } from '../ui/card/card.module';
 import { UiSharedModule } from '../ui/shared/shared.module';
+import { RegisterPageComponent } from './register-page/register-page.component';
 
 @NgModule({
-  declarations: [LoginPageComponent],
+  declarations: [LoginPageComponent, RegisterPageComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
@@ -17,6 +18,7 @@ import { UiSharedModule } from '../ui/shared/shared.module';
     UiInputModule,
     UiCardModule,
     UiSharedModule
-  ]
+  ],
+  exports: [RegisterPageComponent]
 })
 export class AuthModule { }

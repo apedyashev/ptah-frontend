@@ -6,6 +6,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class UiCardComponent implements OnInit {
   @Input() padding: number = 2
+  @Input() classNames: string = ''
+
   constructor() { }
 
   ngOnInit(): void {

@@ -1,9 +1,9 @@
 import { Directive, ElementRef } from '@angular/core';
 
 @Directive({
-  selector: '[fullWidth]'
+  selector: '[full-width-block]'
 })
-export class FullWidthDirective {
+export class FullWidthBlockDirective {
   
   constructor(el: ElementRef) {
     el.nativeElement.classList.add('block');

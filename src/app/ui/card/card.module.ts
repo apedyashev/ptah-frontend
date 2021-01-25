@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UiCardComponent } from './ui-card/ui-card.component';
-
+import { UiCardComponent } from './card/card.component';
 
 
 @NgModule({
@@ -11,4 +10,4 @@ import { UiCardComponent } from './ui-card/ui-card.component';
   ],
   exports: [UiCardComponent]
 })
-export class CardModule { }
+export class UiCardModule { }

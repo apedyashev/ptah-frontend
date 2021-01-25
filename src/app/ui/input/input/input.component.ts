@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-ui-input',
-  templateUrl: './ui-input.component.html',
+  templateUrl: './input.component.html',
 })
 export class UiInputComponent implements OnInit {
   @Input() fullWidth: boolean = false

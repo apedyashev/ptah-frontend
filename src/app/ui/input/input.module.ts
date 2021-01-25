@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UiInputComponent } from './ui-input/ui-input.component';
-
-
+import { UiInputComponent } from './input/input.component';
 
 @NgModule({
   declarations: [UiInputComponent],
@@ -11,4 +9,4 @@ import { UiInputComponent } from './ui-input/ui-input.component';
   ],
   exports: [UiInputComponent]
 })
-export class InputModule { }
+export class UiInputModule { }

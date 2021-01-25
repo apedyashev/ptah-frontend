@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UiButtonComponent } from './ui-button/ui-button.component';
-import { UiButtonRaisedComponent } from './ui-button-raised/ui-button-raised.component';
+import { FullWidthDirective } from './full-width.directive';
+import { UiButtonDirective } from './ui-button.directive';
+import { UiButtonRaisedDirective } from './ui-button-raised.directive';
 
 @NgModule({
-  declarations: [UiButtonComponent, UiButtonRaisedComponent],
+  declarations: [FullWidthDirective, UiButtonDirective, UiButtonRaisedDirective],
   imports: [
     CommonModule
   ],
-  exports: [UiButtonComponent, UiButtonRaisedComponent]
+  exports: [FullWidthDirective, UiButtonDirective, UiButtonRaisedDirective]
 })
 export class ButtonModule { }

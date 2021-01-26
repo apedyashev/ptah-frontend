@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-ui-input',
@@ -9,7 +9,10 @@ export class UiInputComponent implements OnInit {
   @Input() type: string = 'text'
   @Input() name: string = ''
   @Input() label: string = ''
-  @Input() error: string = ''
+  @Input() errors: string[] = []
+
+  @Input() value: string = '';
+  @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
   private isFocused: boolean = false
 
@@ -23,7 +26,7 @@ export class UiInputComponent implements OnInit {
   }
 
   get borderClass(): string {
-    if (this.error) {
+    if (this.errors?.length) {
       return this.isFocused ? 'border-red-400' : 'border-red-300'
     } 
     return this.isFocused ? 'border-gray-400' : 'border-gray-300'
@@ -31,7 +34,7 @@ export class UiInputComponent implements OnInit {
   }
 
   get bgClass(): string {
-    return this.error ? 'bg-red-200' : 'bg-gray-50'
+    return this.errors?.length ? 'bg-red-200' : 'bg-gray-50'
   }
 
   onFocus() {
@@ -40,5 +43,9 @@ export class UiInputComponent implements OnInit {
 
   onBlur() {
     this.isFocused = false
+  }
+
+  onChange( ) {
+    this.valueChange.emit(this.value)
   }
 }

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UiCardComponent } from './ui-card.component';
+import { UiCardComponent } from './card.component';
 
 describe('UiCardComponent', () => {
   let component: UiCardComponent;

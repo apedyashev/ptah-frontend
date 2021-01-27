@@ -4,20 +4,34 @@
             <app-ui-card [padding]="8">
                 <ng-container body>
                     <app-ui-input 
-                        ngDefaultControl
                         label="E-Mail" 
-                        error="" 
-                        [fullWidth]="true" 
                         name="email"
+                        [errors]="emailErrors"
+                        [fullWidth]="true" 
+                        ngDefaultControl
                         [(ngModel)]="model.email" 
                         #email="ngModel"
-                        [errors]="emailError"
                         required
                         email
                     ></app-ui-input>
-                    email: {{model.email}} 
-                    <app-ui-input label="Password" type="password" name="password" [fullWidth]="true"> </app-ui-input>
-                    <button app-ui-button-raised full-width-block color="primary">Log In</button>
+                    <app-ui-input 
+                        label="Password" 
+                        type="password" 
+                        name="password" 
+                        ngDefaultControl
+                        [errors]="passwordErrors"
+                        [fullWidth]="true"
+                        [(ngModel)]="model.password" 
+                        #password="ngModel"
+                        required
+                    ></app-ui-input>
+                    <button 
+                        app-ui-button-raised 
+                        full-width-block 
+                        [color]="'primary'" 
+                        type="submit" 
+                        [disabled]="!loginForm.form.valid"
+                    >Log In</button>
                 </ng-container>
             </app-ui-card>
             

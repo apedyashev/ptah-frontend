@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from './auth.service';
 
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthRoutingModule } from './auth-routing.module';
@@ -14,13 +15,14 @@ import { RegisterPageComponent } from './register-page/register-page.component';
   declarations: [LoginPageComponent, RegisterPageComponent],
   imports: [
     CommonModule,
+    FormsModule,
     AuthRoutingModule,
     UiButtonModule,
     UiInputModule,
     UiCardModule,
     UiSharedModule,
-    FormsModule
   ],
-  exports: [RegisterPageComponent]
+  exports: [RegisterPageComponent],
+  providers: [AuthService]
 })
 export class AuthModule { }

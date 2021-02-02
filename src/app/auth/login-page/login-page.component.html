@@ -34,10 +34,11 @@
                     >Log In</button>
                 </ng-container>
             </app-ui-card>
-            
+
             <app-ui-card [padding]="8" classNames="mt-4 text-center text-sm">
                 <ng-container body>
-                    Don't have an account? <a href="/register">Sign Up</a>
+                    Don't have an account? <a routerLink="/register">Sign Up</a>
+                    <div *ngIf="serverResponseError" class="pt-3 text-red-700">{{serverResponseError}}</div>
                 </ng-container>
             </app-ui-card>
         </div>

@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgModel, NgForm } from '@angular/forms';
+import { NgModel } from '@angular/forms';
 import { LoginRequest } from './login-request.model';
+import { AuthService } from '../auth.service';
+
 import _map from 'lodash/map';
 
 type ErrorMessages = {
@@ -9,19 +11,26 @@ type ErrorMessages = {
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
   @ViewChild('email', { static: true }) emailRef!: NgModel;
   @ViewChild('password', { static: true }) passwordRef!: NgModel;
   model = new LoginRequest('', '');
+  serverResponseError: string = ''
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
   }
 
-  onSubmit() { console.log('submit', this.model, this.emailRef) }
+  onSubmit() { 
+    this.authService.login(this.model).subscribe({
+      next() { console.log('logged in'); },
+      error: (err) => { 
+        this.serverResponseError = err
+      }
+    })
+  }
 
   get emailErrors(): string[]  {
     const errorMessages: ErrorMessages = {

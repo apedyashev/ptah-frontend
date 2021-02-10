@@ -3,7 +3,7 @@
         <span class="block absolute px-1 text-xs text-gray-400">{{label}}</span>
         <input 
             [(ngModel)]="value" (ngModelChange)="onChange()"
-            [ngClass]="['px-1 pt-3 pb-1 text-xs focus:outline-none', bgClass]"
+            [ngClass]="['w-full px-1 pt-3 pb-1 text-xs focus:outline-none', bgClass]"
             [type]="type"
             [name]="name"
             (focus)="onFocus()"

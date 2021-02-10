@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { LoginRequest } from './login-request.model';
 import { AuthService } from '../auth.service';
@@ -38,7 +38,6 @@ export class LoginPageComponent implements OnInit {
       email: 'invalid email format'
     }
     return this.getErrorMessages(this.emailRef, errorMessages);
- 
   }
 
   get passwordErrors(): string[] {

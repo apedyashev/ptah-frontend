@@ -1,5 +1,7 @@
 <div [ngClass]="['border border-gray-300', paddingClass, classNames]">
     <ng-content select="[header]"></ng-content>
     <ng-content select="[body]"></ng-content>
-    <ng-content select="[footer]"></ng-content>
+    <div class="mt-2">
+        <ng-content select="[footer]"></ng-content>
+    </div>
 </div>

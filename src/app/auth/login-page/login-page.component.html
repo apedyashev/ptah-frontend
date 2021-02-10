@@ -25,13 +25,17 @@
                         #password="ngModel"
                         required
                     ></app-ui-input>
+                    
+                </ng-container>
+                <ng-container footer>
                     <button 
                         app-ui-button-raised 
                         full-width-block 
                         [color]="'primary'" 
                         type="submit" 
-                        [disabled]="!loginForm.form.valid"
-                    >Log In</button>
+                        [disabled]="!loginForm.form.valid">
+                        Log In
+                    </button>
                 </ng-container>
             </app-ui-card>
 

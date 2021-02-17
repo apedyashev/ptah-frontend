@@ -13,6 +13,8 @@
             [(ngModel)]="model.username"
             #username="ngModel"
             required
+            minlength="2"
+            maxlength="15"
           ></app-ui-input>
           <app-ui-input
             label="E-Mail"
@@ -24,6 +26,7 @@
             #email="ngModel"
             required
             email
+            maxlength="50"
           ></app-ui-input>
           <app-ui-input
             label="Password"
@@ -35,6 +38,8 @@
             [(ngModel)]="model.password"
             #password="ngModel"
             required
+            minlength="8"
+            maxlength="100"
           >
           </app-ui-input>
           <app-ui-input

@@ -1,51 +1,51 @@
 <div class="container mx-auto lg:w-3/12 md:w-full">
-    <form (ngSubmit)="onSubmit()" #loginForm="ngForm"> 
-        <div class="mt-12">
-            <app-ui-card [padding]="8">
-                <ng-container body>
-                    <app-ui-input 
-                        label="E-Mail" 
-                        name="email"
-                        [errors]="emailErrors"
-                        [fullWidth]="true" 
-                        ngDefaultControl
-                        [(ngModel)]="model.email" 
-                        #email="ngModel"
-                        required
-                        email
-                    ></app-ui-input>
-                    <app-ui-input 
-                        label="Password" 
-                        type="password" 
-                        name="password" 
-                        ngDefaultControl
-                        [errors]="passwordErrors"
-                        [fullWidth]="true"
-                        [(ngModel)]="model.password" 
-                        #password="ngModel"
-                        required
-                    ></app-ui-input>
-                    
-                </ng-container>
-                <ng-container footer>
-                    <button 
-                        app-ui-button-raised 
-                        full-width-block 
-                        [color]="'primary'" 
-                        type="submit" 
-                        [disabled]="!loginForm.form.valid">
-                        Log In
-                    </button>
-                </ng-container>
-            </app-ui-card>
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <div class="mt-12">
+      <app-ui-card [padding]="8">
+        <ng-container body>
+          <app-ui-input
+            label="E-Mail"
+            name="email"
+            [errors]="emailErrors"
+            [fullWidth]="true"
+            ngDefaultControl
+            [(ngModel)]="model.email"
+            #email="ngModel"
+            required
+            email
+          ></app-ui-input>
+          <app-ui-input
+            label="Password"
+            type="password"
+            name="password"
+            ngDefaultControl
+            [errors]="passwordErrors"
+            [fullWidth]="true"
+            [(ngModel)]="model.password"
+            #password="ngModel"
+            required
+            minlength="8"
+          ></app-ui-input>
+        </ng-container>
+        <ng-container footer>
+          <button
+            app-ui-button-raised
+            full-width-block
+            [color]="'primary'"
+            type="submit"
+            [disabled]="!loginForm.form.valid"
+          >
+            Log In
+          </button>
+        </ng-container>
+      </app-ui-card>
 
-            <app-ui-card [padding]="8" classNames="mt-4 text-center text-sm">
-                <ng-container body>
-                    Don't have an account? <a routerLink="/register">Sign Up</a>
-                    <div *ngIf="serverResponseError" class="pt-3 text-red-700">{{serverResponseError}}</div>
-                </ng-container>
-            </app-ui-card>
-        </div>
-    </form>
+      <app-ui-card [padding]="8" classNames="mt-4 text-center text-sm">
+        <ng-container body>
+          Don't have an account? <a routerLink="/register">Sign Up</a>
+          <div *ngIf="serverResponseError" class="pt-3 text-red-700">{{ serverResponseError }}</div>
+        </ng-container>
+      </app-ui-card>
+    </div>
+  </form>
 </div>
-

@@ -3,10 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MainLayoutComponent } from './main-layout/main-layout.component';
 
 @NgModule({
   // The components, directives, and pipes that belong to this NgModule.
-  declarations: [AppComponent],
+  declarations: [AppComponent, MainLayoutComponent],
   // The subset of declarations that should be visible and usable in the component templates of other NgModules.
   // exports: [],
   // Other modules whose exported classes are needed by component templates declared in this NgModule.

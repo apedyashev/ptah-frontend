@@ -35,4 +35,19 @@ export class ValidationService {
 
     return messages;
   }
+
+  setServerErrorsToFields(component: any, errors: string[]) {
+    for (let fieldName in errors) {
+      const fieldRefName = `${fieldName}Ref`;
+      const fieldRef = component[fieldRefName];
+      if (fieldRef) {
+        fieldRef.control.setErrors({
+          areServerErrors: true,
+          errors: errors[fieldName],
+        });
+      } else {
+        console.error(`${fieldRefName} not found`);
+      }
+    }
+  }
 }

@@ -1,0 +1,37 @@
+<form (ngSubmit)="onSubmit()" #emailConfirmationForm="ngForm">
+  <app-page-barebone [serverResponseError]="serverResponseError">
+    <ng-container main-card-body>
+      <h4 class="text-lg text-center font-medium mb-4">Enter Confirmation Code</h4>
+      <div class="text-sm text-center mb-7">
+        Enter the confirmation code we sent to {{ emailToBeConfirmed }}
+      </div>
+
+      <app-ui-input
+        label="Confirmation code"
+        [fullWidth]="true"
+        name="token"
+        [errors]="tokenErrors"
+        ngDefaultControl
+        [(ngModel)]="model.token"
+        #token="ngModel"
+        required
+      ></app-ui-input>
+    </ng-container>
+    <ng-container main-card-footer>
+      <button
+        app-ui-button-raised
+        full-width-block
+        class="mb-1"
+        [color]="'primary'"
+        type="submit"
+        [disabled]="!emailConfirmationForm.form.valid"
+      >
+        Next
+      </button>
+
+      <a routerLink="/register"><button app-ui-button full-width-block>Back</button></a>
+    </ng-container>
+
+    <ng-container aux-card-body> Have an account? <a routerLink="/login">Log In</a> </ng-container>
+  </app-page-barebone>
+</form>

@@ -1,0 +1,19 @@
+<div class="container mx-auto lg:w-3/12 md:w-full">
+  <div class="mt-12">
+    <app-ui-card [padding]="8">
+      <ng-container body>
+        <ng-content select="[main-card-body]"></ng-content>
+      </ng-container>
+      <ng-container footer>
+        <ng-content select="[main-card-footer]"></ng-content>
+      </ng-container>
+    </app-ui-card>
+
+    <app-ui-card [padding]="8" classNames="mt-4 text-center text-sm">
+      <ng-container body>
+        <ng-content select="[aux-card-body]"></ng-content>
+        <div *ngIf="serverResponseError" class="pt-3 text-red-700">{{ serverResponseError }}</div>
+      </ng-container>
+    </app-ui-card>
+  </div>
+</div>

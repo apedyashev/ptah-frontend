@@ -24,8 +24,9 @@ export class LoginPageComponent implements OnInit {
       next() {
         console.log('logged in');
       },
-      error: (err) => {
-        this.serverResponseError = err;
+      error: ({ message, errors }) => {
+        this.validationService.setServerErrorsToFields(this, errors);
+        this.serverResponseError = message;
       },
     });
   }

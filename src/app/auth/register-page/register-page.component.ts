@@ -23,26 +23,13 @@ export class RegisterPageComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    console.log(this.model);
     this.authService.register(this.model).subscribe({
       next() {
         // TODO: show success message
         console.log('registered in');
       },
       error: (err) => {
-        for (let fieldName in err.errors) {
-          const fieldRefName = `${fieldName}Ref`;
-          const fieldRef = (this as any)[fieldRefName];
-          if (fieldRef) {
-            fieldRef.control.setErrors({
-              areServerErrors: true,
-              errors: err.errors[fieldName],
-            });
-          } else {
-            console.error(`${fieldRefName} not found`);
-          }
-        }
-
+        this.validationService.setServerErrorsToFields(this, err.errors);
         this.serverResponseError = err.message;
       },
     });

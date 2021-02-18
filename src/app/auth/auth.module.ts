@@ -10,7 +10,7 @@ import { UiInputModule } from '../ui/input/input.module';
 import { UiCardModule } from '../ui/card/card.module';
 import { UiSharedModule } from '../ui/shared/shared.module';
 import { RegisterPageComponent } from './register-page/register-page.component';
-
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [LoginPageComponent, RegisterPageComponent],
   imports: [
@@ -21,8 +21,9 @@ import { RegisterPageComponent } from './register-page/register-page.component';
     UiInputModule,
     UiCardModule,
     UiSharedModule,
+    SharedModule,
   ],
   exports: [RegisterPageComponent],
-  providers: [AuthService]
+  providers: [AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}

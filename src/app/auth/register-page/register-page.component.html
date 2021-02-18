@@ -1,11 +1,10 @@
 <div class="container mx-auto lg:w-3/12 md:w-full">
-  <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+  <form (ngSubmit)="onSubmit()" #registerForm="ngForm" appConfirmedPassword>
     <div class="mt-12">
       <app-ui-card [padding]="8">
         <ng-container body>
           <app-ui-input
             label="User name (login)"
-            error=""
             [fullWidth]="true"
             name="username"
             [errors]="userNameErrors"

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { NgModel, NgForm } from '@angular/forms';
 import { RegisterRequest } from './register-request.model';
 // services
 import { AuthService } from '../auth.service';
@@ -14,6 +14,7 @@ export class RegisterPageComponent implements OnInit {
   @ViewChild('email', { static: true }) emailRef!: NgModel;
   @ViewChild('password', { static: true }) passwordRef!: NgModel;
   @ViewChild('passwordConfirmation', { static: true }) passwordConfirmationRef!: NgModel;
+  @ViewChild('registerForm', { static: true }) registerFormRef!: NgForm;
   model = new RegisterRequest();
   serverResponseError: string = '';
 
@@ -72,8 +73,13 @@ export class RegisterPageComponent implements OnInit {
   }
 
   get passwordConfirmationErrors(): string[] {
-    return this.validationService.getErrorMessages(this.passwordConfirmationRef, {
-      required: 'Password confirmation is required',
+    const formLevelErrors = this.validationService.getErrorMessages(this.registerFormRef, {
+      confirmedPassword: 'doesnt match',
     });
+    const fieldLevelErrors = this.validationService.getErrorMessages(this.passwordConfirmationRef, {
+      required: 'Password confirmation is required',
+      confirmedPassword: 'doesnt match',
+    });
+    return [...formLevelErrors, ...fieldLevelErrors];
   }
 }

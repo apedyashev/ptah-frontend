@@ -1,25 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { Observable, BehaviorSubject, concat, throwError, of } from 'rxjs';
+import { filter, take, map, tap, catchError } from 'rxjs/operators';
 import { LoginRequest } from './login-page/login-request.model';
 import { RegisterRequest } from './register-page/register-request.model';
+import { LocalStorageService } from '../shared/local-storage.service';
 
-@Injectable()
+interface User {
+  email: string;
+}
+@Injectable({
+  providedIn: 'root', // it is a singleton
+})
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {}
+  private userSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private lsService: LocalStorageService
+  ) {}
 
   login(formData: LoginRequest): Observable<HttpResponse<any>> {
     // TODO: add base URL in interceptor?
-    return this.http.post('http://localhost:8090/login', formData, { observe: 'response' }).pipe(
-      catchError(this.handleError),
-      tap((resp: HttpResponse<any>) => {
-        const authData = resp.headers.get('authorization');
-        localStorage.setItem('auth', authData || '');
-        this.router.navigate(['/']);
-      })
-    );
+    return this.http
+      .post('http://localhost:8090/login', formData, { observe: 'response' })
+      .pipe(catchError(this.handleError), tap(this.handleSuccesfulLogin));
   }
 
   register(formData: RegisterRequest): Observable<HttpResponse<any>> {
@@ -29,7 +36,7 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap((resp: HttpResponse<any>) => {
-          localStorage.setItem('@register/emailToBeConfirmed', formData.email);
+          this.lsService.setEmailToBeConfirmed(formData.email);
           this.router.navigate(['/confirm-email']);
         })
       );
@@ -40,19 +47,59 @@ export class AuthService {
       .post('http://localhost:8090/api/v1/auth/confirm', { token }, { observe: 'response' })
       .pipe(
         catchError(this.handleError),
-        tap((resp: HttpResponse<any>) => {
-          const authData = resp.headers.get('authorization');
-          localStorage.setItem('auth', authData || '');
-          this.router.navigate(['/']);
+        tap(this.handleSuccesfulLogin),
+        tap(() => {
+          this.lsService.removeEmailToBeConfirmed();
         })
       );
   }
 
   getEmailToBeConfirmed(): string | null {
-    return localStorage.getItem('@register/emailToBeConfirmed');
+    return this.lsService.getEmailToBeConfirmed();
   }
 
-  // TODO:  get the server error message from the response once it's implemented in API
+  isAuthenticated(): Observable<boolean> {
+    return this.getUser().pipe(map((u) => !!u));
+  }
+
+  private handleSuccesfulLogin = (resp: HttpResponse<any>) => {
+    const authData = resp.headers.get('authorization');
+    this.lsService.setAuthHeader(authData || '');
+    this.router.navigate(['/']);
+  };
+
+  private getUser() {
+    return concat(
+      this.userSubject.pipe(
+        take(1),
+        filter((u) => !!u)
+      ),
+      this.getUserFromApi(),
+      this.userSubject.asObservable()
+    );
+  }
+
+  private getUserFromApi() {
+    const authHeader = this.lsService.getAuthHeader();
+    if (!authHeader) {
+      return of(null);
+    }
+
+    return this.http
+      .get('http://localhost:8090/api/users/me', {
+        headers: { authorization: authHeader },
+        observe: 'response',
+      })
+      .pipe(
+        catchError(this.handleError),
+        tap((resp: HttpResponse<any>) => {
+          console.log(resp);
+          this.userSubject.next(resp.body);
+        }),
+        map((resp) => resp.body)
+      );
+  }
+
   private handleError(errorResponse: HttpErrorResponse) {
     const { error: errorBody } = errorResponse;
     if (errorResponse instanceof ErrorEvent) {

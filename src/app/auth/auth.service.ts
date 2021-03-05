@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject, concat, throwError, EMPTY } from 'rxjs';
+import { Observable, BehaviorSubject, concat, EMPTY } from 'rxjs';
 import { filter, take, map, tap, catchError } from 'rxjs/operators';
 import { LoginRequest } from './login-page/login-request.model';
 import { RegisterRequest } from './register-page/register-request.model';
@@ -26,7 +26,7 @@ export class AuthService {
     // TODO: add base URL in interceptor?
     return this.http
       .post('http://localhost:8090/login', formData, { observe: 'response' })
-      .pipe(catchError(this.handleError), tap(this.handleSuccesfulLogin));
+      .pipe(tap(this.handleSuccesfulLogin));
   }
 
   register(formData: RegisterRequest): Observable<HttpResponse<any>> {
@@ -34,7 +34,6 @@ export class AuthService {
     return this.http
       .post('http://localhost:8090/api/v1/auth/register', formData, { observe: 'response' })
       .pipe(
-        catchError(this.handleError),
         tap((resp: HttpResponse<any>) => {
           this.lsService.setEmailToBeConfirmed(formData.email);
           this.router.navigate(['/confirm-email']);
@@ -46,7 +45,6 @@ export class AuthService {
     return this.http
       .post('http://localhost:8090/api/v1/auth/confirm', { token }, { observe: 'response' })
       .pipe(
-        catchError(this.handleError),
         tap(this.handleSuccesfulLogin),
         tap(() => {
           this.lsService.removeEmailToBeConfirmed();
@@ -85,23 +83,5 @@ export class AuthService {
       ),
       this.userSubject.asObservable()
     );
-  }
-
-  // TODO:  global error handler (interceptor?)
-  private handleError(errorResponse: HttpErrorResponse) {
-    const { error: errorBody } = errorResponse;
-    if (errorResponse instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', errorBody.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(`Backend returned code ${errorResponse.status}, body was:`, errorBody);
-      if (errorResponse.status === 422) {
-        return throwError(errorBody);
-      }
-    }
-    // Return an observable with a user-facing error message.
-    return throwError({ message: 'Something bad happened; please try again later.', errors: [] });
   }
 }

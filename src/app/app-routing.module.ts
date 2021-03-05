@@ -11,6 +11,13 @@ const routes: Routes = [
     loadChildren: () => import('./photos/photos.module').then((m) => m.PhotosModule),
     pathMatch: 'full',
   },
+  {
+    path: 'account',
+    component: MainLayoutComponent,
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./account/account.module').then((m) => m.AccountModule),
+    pathMatch: 'full',
+  },
   { path: '', loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule) },
 ];
 

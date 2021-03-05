@@ -20,11 +20,10 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const url: string = state.url;
+    // const url: string = state.url;
 
     return this.authService.isAuthenticated().pipe(
       tap((isAuthenticated) => {
-        console.log(isAuthenticated);
         this.handleAuthorization(isAuthenticated, state);
       })
     );

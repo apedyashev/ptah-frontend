@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { AuthGuard } from './auth/auth.guard';
+import { httpInterceptorProviders } from './http-interceptors';
 @NgModule({
   // The components, directives, and pipes that belong to this NgModule.
   declarations: [AppComponent, MainLayoutComponent],
@@ -14,7 +15,7 @@ import { AuthGuard } from './auth/auth.guard';
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   // Creators of services that this NgModule contributes to the global collection of services;
   // they become accessible in all parts of the app. (You can also specify providers at the component level.)
-  providers: [AuthGuard],
+  providers: [AuthGuard, httpInterceptorProviders],
   // The main application view, called the root component, which hosts all other app views.
   // Only the root NgModule should set the bootstrap property.
   bootstrap: [AppComponent],

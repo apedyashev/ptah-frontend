@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject, concat, throwError, of } from 'rxjs';
+import { Observable, BehaviorSubject, concat, throwError, EMPTY } from 'rxjs';
 import { filter, take, map, tap, catchError } from 'rxjs/operators';
 import { LoginRequest } from './login-page/login-request.model';
 import { RegisterRequest } from './register-page/register-request.model';
 import { LocalStorageService } from '../shared/local-storage.service';
+import { UserService } from '../account/user.service';
+import { User } from '../account/user';
 
-interface User {
-  email: string;
-}
 @Injectable({
   providedIn: 'root', // it is a singleton
 })
@@ -19,7 +18,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private lsService: LocalStorageService
+    private lsService: LocalStorageService,
+    private userService: UserService
   ) {}
 
   login(formData: LoginRequest): Observable<HttpResponse<any>> {
@@ -74,32 +74,20 @@ export class AuthService {
         take(1),
         filter((u) => !!u)
       ),
-      this.getUserFromApi(),
+      this.userService.loadUser().pipe(
+        catchError((error) => {
+          this.userSubject.next(null);
+          // do not rethrow error
+          return EMPTY;
+        }),
+        filter((u: User) => !!u),
+        tap((u: User) => this.userSubject.next(u))
+      ),
       this.userSubject.asObservable()
     );
   }
 
-  private getUserFromApi() {
-    const authHeader = this.lsService.getAuthHeader();
-    if (!authHeader) {
-      return of(null);
-    }
-
-    return this.http
-      .get('http://localhost:8090/api/users/me', {
-        headers: { authorization: authHeader },
-        observe: 'response',
-      })
-      .pipe(
-        catchError(this.handleError),
-        tap((resp: HttpResponse<any>) => {
-          console.log(resp);
-          this.userSubject.next(resp.body);
-        }),
-        map((resp) => resp.body)
-      );
-  }
-
+  // TODO:  global error handler (interceptor?)
   private handleError(errorResponse: HttpErrorResponse) {
     const { error: errorBody } = errorResponse;
     if (errorResponse instanceof ErrorEvent) {

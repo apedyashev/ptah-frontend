@@ -9,7 +9,7 @@ const routes: Routes = [
     component: MainLayoutComponent,
     canActivate: [AuthGuard],
     loadChildren: () => import('./photos/photos.module').then((m) => m.PhotosModule),
-    pathMatch: 'full',
+    // pathMatch: 'full',
   },
   {
     path: 'account',

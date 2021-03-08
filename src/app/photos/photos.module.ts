@@ -3,13 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { PhotosRoutingModule } from './photos-routing.module';
 import { PhotosComponent } from './photos.component';
-
+import { UploadComponent } from './upload-page/upload-page.component';
 
 @NgModule({
-  declarations: [PhotosComponent],
-  imports: [
-    CommonModule,
-    PhotosRoutingModule
-  ]
+  declarations: [PhotosComponent, UploadComponent],
+  imports: [CommonModule, PhotosRoutingModule],
 })
-export class PhotosModule { }
+export class PhotosModule {}

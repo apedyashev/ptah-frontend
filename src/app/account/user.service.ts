@@ -12,7 +12,7 @@ export class UserService {
 
   loadUser(): Observable<User> {
     return this.http
-      .get('http://localhost:8090/api/users/me', {
+      .get('users/me', {
         observe: 'response',
       })
       .pipe(map((resp) => resp.body as User));

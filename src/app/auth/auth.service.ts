@@ -23,33 +23,30 @@ export class AuthService {
   ) {}
 
   login(formData: LoginRequest): Observable<HttpResponse<any>> {
-    // TODO: add base URL in interceptor?
-    return this.http
-      .post('http://localhost:8090/login', formData, { observe: 'response' })
-      .pipe(tap(this.handleSuccesfulLogin));
+    return (
+      this.http
+        // TODO: move under v1/api on backend and then remove base url from here
+        .post('http://localhost:8090/login', formData, { observe: 'response' })
+        .pipe(tap(this.handleSuccesfulLogin))
+    );
   }
 
   register(formData: RegisterRequest): Observable<HttpResponse<any>> {
-    // TODO: add base URL in interceptor?
-    return this.http
-      .post('http://localhost:8090/api/v1/auth/register', formData, { observe: 'response' })
-      .pipe(
-        tap((resp: HttpResponse<any>) => {
-          this.lsService.setEmailToBeConfirmed(formData.email);
-          this.router.navigate(['/confirm-email']);
-        })
-      );
+    return this.http.post('auth/register', formData, { observe: 'response' }).pipe(
+      tap((resp: HttpResponse<any>) => {
+        this.lsService.setEmailToBeConfirmed(formData.email);
+        this.router.navigate(['/confirm-email']);
+      })
+    );
   }
 
   confirmEmail(token: string): Observable<HttpResponse<any>> {
-    return this.http
-      .post('http://localhost:8090/api/v1/auth/confirm', { token }, { observe: 'response' })
-      .pipe(
-        tap(this.handleSuccesfulLogin),
-        tap(() => {
-          this.lsService.removeEmailToBeConfirmed();
-        })
-      );
+    return this.http.post('auth/confirm', { token }, { observe: 'response' }).pipe(
+      tap(this.handleSuccesfulLogin),
+      tap(() => {
+        this.lsService.removeEmailToBeConfirmed();
+      })
+    );
   }
 
   getEmailToBeConfirmed(): string | null {

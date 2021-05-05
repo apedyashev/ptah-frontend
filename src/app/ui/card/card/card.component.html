@@ -1,7 +1,9 @@
 <div [ngClass]="['border border-gray-300', paddingClass, classNames]">
+  <div>
     <ng-content select="[header]"></ng-content>
-    <ng-content select="[body]"></ng-content>
-    <div class="mt-2">
-        <ng-content select="[footer]"></ng-content>
-    </div>
+  </div>
+  <ng-content select="[body]"></ng-content>
+  <div #footer [ngClass]="{ 'mt-2': !isFooterEmpty }">
+    <ng-content select="[footer]"></ng-content>
+  </div>
 </div>

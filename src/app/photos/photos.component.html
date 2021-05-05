@@ -1,1 +1,10 @@
-<p>photos works!</p>
+<div class="flex flex-wrap">
+  <a *ngFor="let photo of photos" class="w-2/6">
+    <app-ui-card classNames="m-2">
+      <ng-container header> my awesome photo #{{ photo }} </ng-container>
+      <ng-container body>
+        <img src="https://randomuser.me/api/portraits/men/{{ photo }}.jpg" />
+      </ng-container>
+    </app-ui-card>
+  </a>
+</div>
